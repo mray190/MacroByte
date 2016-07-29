@@ -91,9 +91,9 @@ radio.onDataReceived(() => {
 					<section id="ciphers" class="wrapper style2">
 						<div class="inner">
 							<h2 class="major">Create your own ciphers!</h2>
-							<p>[FIG: eavesdropping cartoon]</p><p>
+							<a href="#" class="image fit" style="margin-bottom: 0em;"><img src="images/insecure_listener.png" alt="" data-position="center center" /></a>
 							When the micro:bit sends a message over the radio, any other nearby micro:bit on the same channel can see it. The Internet works the same way: when you send a “packet” of data to the server, everyone else on the same network can see it too. How can we protect the information when anyone can see it?</p><p>
-							[FIG: scrambling messages]</p><p>
+							<a href="#" class="image fit" style="margin-bottom: 0em;"><img src="images/encryption_listener.png" alt="" data-position="center center" /></a>
 							To protect a message that’s transmitted in public, we have to scramble it so that the person who’s supposed to see it can unscramble it, but no one else can. In the world of information security, the scrambled message is called <i>ciphertext</i> and the rule that’s used to scramble it is called a <i>cipher</i>. For a cipher to work, it has to combine the message with another secret that only the sender and receiver know. This secret is sometimes called a <i>key</i>. Anyone who knows the key can decipher the message, and everyone else will just get nonsense.</p>
 							<p><blockquote>It’s important to keep the key a secret, or else anyone can decipher the message. The strongest lock in the world is no good if everyone has the key! The same is true of passwords. The easiest way to steal secret information from an encrypted system isn’t to break the code – it’s to trick someone into telling you their password.</blockquote></p>
 						</div>
@@ -104,7 +104,7 @@ radio.onDataReceived(() => {
 						<div class="inner">
 							<h2 class="major">Caesar Cipher</h2>
 							<p>The first cipher we’ll program is called the <i>Caesar cipher</i>. It’s named after the ancient Roman ruler, who reportedly used it to send orders to his armies. The Caesar cipher is a kind of <i>substitution ciphers</i>, in which each letter is replaced by a specific other letter. Here’s an example:</p><p>
-							[FIG: Caesar cipher + 1]</p><p>
+							<a href="#" class="image fit" style="margin-bottom: 0em;"><img src="images/caesar_shift.png" alt="" data-position="center center" /></a></p>
 							Can you guess how it works? Every letter is replaced by the next letter in the alphabet. To make it harder to predict, we can use other offsets. For example, with an offset of 4, we’d replace A with E, B with F, etc. When we get to Z, we have to wrap around and start with A again. So with the offset of 4, W would be replaced with A, X with B, Y with C, and Z with D.</p><p>
 							To program the cipher into a computer, we first convert every letter into a number: A is 0, B is 1, and so on. Then we add the offset. To wrap around, we use the “modulo” operation, which is the % sign in computer code. Then convert the number back into a letter and send it over the channel. Here’s the code:</p>
 							<pre><code>radio.setGroup(42);
@@ -208,7 +208,7 @@ radio.sendString(image);</code></pre>
 							<a href="code_src/image_send.hex" class="button small fit icon fa-download" download>Download</a><p>
 						<h3>Encoding images</h3>
 						<p>Now let’s protect this image. We’re going to use a bit flip cipher, uses another “image” of 0’s and 1’s as its secret key. To encode the message, line up its bits with the bits of the secret key. If the secret key has a 1, then flip the bit of the message. If the secret key has a 0, then leave that bit of the message alone.</p>
-						<p>[FIG: bit flipping diagram]</p>
+						<p><a href="#" class="image fit" style="margin-bottom: 0em;"><img src="images/bitmask.png" alt="" data-position="center center" /></a></p>
 						<p>If anyone tries to look at the image without knowing the secret key, they’ll just see random bits!</p>
 						<p>Here’s the code for the sender:</p>
 						<pre><code>radio.setGroup(42);
