@@ -156,7 +156,7 @@ radio.onDataReceived(() => {
     var plain_text = "";
     var vignere_key = "Badger";
     var vignere_index;
-    for (var i = 0; i < plain_text.length; i++) {
+    for (var i = 0; i < encoded_text.length; i++) {
         vignere_index = i % vignere_key.length;
         plain_text += String.fromCharCode(encoded_text[i].charCodeAt(0) - vignere_key[i].charCodeAt(vignere_index));
     }
@@ -176,16 +176,45 @@ for (var i = 0; i < plain_text.length; i++) {
 radio.sendString(encoded_text);</code></pre>
 						</div>
 					</section>
+					
+				<!-- Pig Latin -->
+					<section id="image" class="wrapper style1">
+						<div class="inner">
+							<h2 class="major">Pig Latin Cipher</h2>
+							Receiving:
+							<pre><code>radio.setGroup(42);
+
+radio.onDataReceived(() => {
+    var encoded_text = radio.receiveString();
+    var plain_text = encoded_text[encoded_text.length - 3];
+    for (var i = 0; i < encoded_text.length - 3; i++) {
+        plain_text += encoded_text[i];
+    }
+    basic.showString(plain_text);
+});</code></pre>
+							Sending:
+							<pre><code>radio.setGroup(42);
+var plain_text = "Monkey";
+
+var encoded_text = "";
+for (var i = 1; i < plain_text.length; i++) {
+    encoded_text += plain_text[i];
+}
+encoded_text += plain_text[0] + "ay";
+
+radio.sendString(encoded_text);</code></pre>
+						</div>
+					</section>
 
 				<!-- Composite -->
-					<section id="composite" class="wrapper style1">
+					<section id="composite" class="wrapper style2">
 						<div class="inner">
 							<h2 class="major">Composite Cipher</h2>
 						</div>
 					</section>
 
 				<!-- Final -->
-					<section id="final" class="wrapper style2">
+					<section id="final" class="wrapper style3">
 						<div class="inner">
 							<h2 class="major">Send messages to your friends</h2>
 						</div>
