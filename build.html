@@ -117,9 +117,19 @@ radio.sendString(encoded_text);</code></pre>
 						<div class="inner">
 							<h2 class="major">Addition Cipher</h2>
 							Receiving:
-							<pre><code>
+							<pre><code>radio.setGroup(42);
+var n = 3;
 
-							</pre></code>
+radio.onDataReceived(() => {
+    var encoded_message = radio.receiveString();
+    var plain_text = "";
+    for (var i = 0; i < encoded_message.length; i++) {
+        plain_text += encoded_message[i];
+        if (i % (n - 1) == n - 2)
+            i++;
+    }
+    basic.showString(plain_text);
+});</pre></code>
 							Sending:
 							<pre><code>radio.setGroup(42);
 var n = 3;
