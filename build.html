@@ -165,7 +165,6 @@ var vignere_key = "Badger"
 radio.onDataReceived(() => {
     var encoded_text = radio.receiveString();
     var plain_text = "";
-    var vignere_key = "Badger";
     var vignere_index;
     for (var i = 0; i < encoded_text.length; i++) {
         vignere_index = i % vignere_key.length;
