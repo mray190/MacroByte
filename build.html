@@ -159,6 +159,8 @@ radio.sendString(encoded_message);</pre></code>
 							<h2 class="major">Vignere Cipher</h2>
 							Receiving:
 							<pre><code>radio.setGroup(42);
+var vignere_key = "Badger"
+
 radio.onDataReceived(() => {
     var encoded_text = radio.receiveString();
     var plain_text = "";
@@ -170,8 +172,10 @@ radio.onDataReceived(() => {
     }
 });</code></pre>
 							Sending:
-							<pre><code>var plain_text = "Taco Vignere";
+							<pre><code>radio.setGroup(42);
 var vignere_key = "Badger";
+
+var plain_text = "Taco Vignere";
 var encoded_text = "";
 var vignere_index;
 for (var i = 0; i < plain_text.length; i++) {
