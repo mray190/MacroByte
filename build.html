@@ -67,6 +67,12 @@
 					<section id="radio" class="wrapper style1">
 						<div class="inner">
 							<h2 class="major">Establishing connections with other microbits</h2>
+							<pre><code>radio.setGroup(42);
+radio.sendString("Taco");
+radio.onDataReceived(() => {
+    // Do stuff here!
+});
+</code></pre>
 						</div>
 					</section>
 
@@ -81,14 +87,25 @@
 					<section id="caesar" class="wrapper style4">
 						<div class="inner">
 							<h2 class="major">Caesar Cipher</h2>
-							<pre><code>i = 0;
-while (!deck.isInOrder()) {
-print 'Iteration ' + i;
-deck.shuffle();
-i++;
-}
+							Receiving:
+							<pre><code>radio.setGroup(42);
+var shift_amount = 5;
 
-print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
+radio.onDataReceived(() => {
+    var encoded_message = radio.receiveString();
+    var result = "";
+    for (var i = 0; i < encoded_message.length; i++) {
+        result += String.fromCharCode(encoded_message[i].charCodeAt(0) + shift_amount)
+    }
+    basic.showString(result);
+});</code></pre>
+							Sending:
+							<pre><code>var plain_text = "Taco";
+var encoded_text = "";
+for (var i=0; i < plain_text.length; i++) {
+    encoded_text += String.fromCharCode(plain_text[i].charCodeAt(0) - shift_amount);
+}
+radio.sendString(encoded_text);</code></pre>
 						</div>
 					</section>
 
