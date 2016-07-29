@@ -150,6 +150,30 @@ radio.sendString(encoded_message);</pre></code>
 					<section id="image" class="wrapper style2">
 						<div class="inner">
 							<h2 class="major">Image Cipher</h2>
+							Receiving:
+							<pre><code>radio.setGroup(42);
+var key = "1001101100111000010111111";
+
+radio.onDataReceived(() => {
+    var encoded_message = radio.receiveString();
+    for (var i = 0; i < encoded_message.length; i++) {
+        if (((parseInt(encoded_message[i]) + parseInt(key[i])) % 2)) {
+            led.plot(i % 5, i / 5)
+        } else {
+            led.unplot(i % 5, i / 5)
+        }
+    }
+});</code></pre>
+						Sending:
+						<pre><code>radio.setGroup(42);
+var image = "0101001010000001000101110";
+var key = "1001101100111000010111111";
+
+var encoded_message = "";
+for (var i = 0; i < image.length; i++) {
+    encoded_message += ('' + ((parseInt(image[i]) + parseInt(key[i])) % 2))
+}
+radio.sendString(encoded_message);</code></pre>
 						</div>
 					</section>
 
