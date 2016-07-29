@@ -247,8 +247,24 @@ radio.onDataReceived(() => {
 				<!-- Vignere -->
 					<section id="vignere" class="wrapper style4">
 						<div class="inner">
-							<h2 class="major">Vignere Cipher</h2>
-							Receiving:
+							<h2 class="major">Vigenère Cipher</h2>
+							The Vigenère cipher is a more advanced version of the Caesar cipher. Just like the Caesar cipher, each letter is replaced by a specific other letter through an offset; however, the offset changes throughout the message! To do this, the Vigenère cipher uses a key to tell the cipher how much to shift each letter. For example, using “badger” as the key would use the offset values “1, 0, 3, 6, 17”, determined from the letter’s distance from the letter a (b is 1 away, d is 3 away, etc.). This means the message would have its first letter shifted by 1, its second letter shifted by 0, and so on. Once we’ve used all the values in the key, we start over again, so the sixth letter would again be shifted by 1.<p><p>
+							Here's the code for the sender:
+							<pre><code>radio.setGroup(42);
+var vignere_key = "Badger";
+
+var plain_text = "Taco Vignere";
+var encoded_text = "";
+var vignere_index = 0;
+for (var i = 0; i < plain_text.length; i++) {
+    vignere_index = i % vignere_key.length;
+    encoded_text += String.fromCharCode(plain_text[i].charCodeAt(0) + vignere_key[i].charCodeAt(vignere_index));
+}
+
+radio.sendString(encoded_text);</code></pre>
+<a href="code_src/vignere_send.hex" class="button small fit icon fa-download" download>Download</a><br>
+In order to decode the Vigenère cipher, you need to know the key! Once you do, it’s as simple as performing the cipher backwards, shifting each letter backwards by the same value.<p><p>
+							Here's how we do it:
 							<pre><code>radio.setGroup(42);
 var vignere_key = "Badger"
 
@@ -263,20 +279,8 @@ radio.onDataReceived(() => {
     basic.showString(plain_text);
 });</code></pre>
 							<a href="code_src/vignere_receive.hex" class="button small fit icon fa-download" download>Download</a><br>
-							Sending:
-							<pre><code>radio.setGroup(42);
-var vignere_key = "Badger";
-
-var plain_text = "Taco Vignere";
-var encoded_text = "";
-var vignere_index = 0;
-for (var i = 0; i < plain_text.length; i++) {
-    vignere_index = i % vignere_key.length;
-    encoded_text += String.fromCharCode(plain_text[i].charCodeAt(0) + vignere_key[i].charCodeAt(vignere_index));
-}
-
-radio.sendString(encoded_text);</code></pre>
-							<a href="code_src/vignere_send.hex" class="button small fit icon fa-download" download>Download</a><br>
+							
+							
 						</div>
 					</section>
 					
@@ -284,19 +288,10 @@ radio.sendString(encoded_text);</code></pre>
 					<section id="piglatin" class="wrapper style1">
 						<div class="inner">
 							<h2 class="major">Pig Latin Cipher</h2>
-							Receiving:
-							<pre><code>radio.setGroup(42);
+							Pig latin is a really simple way to make everyday words sound confusing! For every word, take the first syllable of the word and put it at the end of the word. Then, add “ay” to the word. For example “pig latin” would become “igpay atinlay”. Because it’s so simple, you can every try it out loud!<p>
+For our computer version of pig latin, we take the first letter (instead of syllable) of every word and put it at the end. Then, we add “ay” at the end. Try out the code for yourself! Unlike other ciphers, however, this one is still pretty easy to read, so it’s not very secure…<p>
 
-radio.onDataReceived(() => {
-    var encoded_text = radio.receiveString();
-    var plain_text = encoded_text[encoded_text.length - 3];
-    for (var i = 0; i < encoded_text.length - 3; i++) {
-        plain_text += encoded_text[i];
-    }
-    basic.showString(plain_text);
-});</code></pre>
-							<a href="code_src/piglatin_receive.hex" class="button small fit icon fa-download" download>Download</a><br>
-							Sending:
+							Here's the code for the sender:
 							<pre><code>radio.setGroup(42);
 var plain_text = "Monkey";
 
@@ -308,6 +303,21 @@ encoded_text += plain_text[0] + "ay";
 
 radio.sendString(encoded_text);</code></pre>
 							<a href="code_src/piglatin_send.hex" class="button small fit icon fa-download" download>Download</a><br>
+							To unscramble the secret message, our computer program removes “ay” from the end of the word and then takes the last letter and puts it at the front. Pretty simple!<p><p>
+							
+							Here's how we do it:
+							<pre><code>radio.setGroup(42);
+
+radio.onDataReceived(() => {
+    var encoded_text = radio.receiveString();
+    var plain_text = encoded_text[encoded_text.length - 3];
+    for (var i = 0; i < encoded_text.length - 3; i++) {
+        plain_text += encoded_text[i];
+    }
+    basic.showString(plain_text);
+});</code></pre>
+							<a href="code_src/piglatin_receive.hex" class="button small fit icon fa-download" download>Download</a><br>
+							
 						</div>
 					</section>
 
@@ -323,11 +333,14 @@ radio.sendString(encoded_text);</code></pre>
 				<!-- Final -->
 					<section id="final" class="wrapper style3">
 						<div class="inner">
-							<h2 class="major">Send messages to your friends</h2>
+							<h2 class="major">Send messages to your friends!</h2>
 							Once you finish the tutorial, you can download our code library [link] to try more advanced encryption schemes. You can even combine different encryption methods to make your messages even more secure.<br>
 							This project just scratches the surface of information security. To learn more, check out some of these resources:<p>
 							[Links]<p>
-							Want to learn more about programming with the BBC micro:bit? Check out some of these other cool projects:
+							Want to learn more about programming with the BBC micro:bit? Check out some of these other cool projects:<p>
+							
+							Additionally, you can download some crpytography samples for python! To use these with the micro:bit, you'll need the Mu editor.<p>
+							<a href="code_src/python_crypto_functions.py" class="button small fit icon fa-download" download>Download</a><p><br>
 						</div>
 					</section>
 
