@@ -100,7 +100,10 @@ radio.onDataReceived(() => {
     basic.showString(result);
 });</code></pre>
 							Sending:
-							<pre><code>var plain_text = "Taco";
+							<pre><code>radio.setGroup(42);
+var shift_amount = 5;
+
+var plain_text = "Taco";
 var encoded_text = "";
 for (var i=0; i < plain_text.length; i++) {
     encoded_text += String.fromCharCode(plain_text[i].charCodeAt(0) - shift_amount);
@@ -113,6 +116,23 @@ radio.sendString(encoded_text);</code></pre>
 					<section id="addition" class="wrapper style1">
 						<div class="inner">
 							<h2 class="major">Addition Cipher</h2>
+							Receiving:
+							<pre><code>
+
+							</pre></code>
+							Sending:
+							<pre><code>radio.setGroup(42);
+var n = 3;
+
+var plain_text = "Taco";
+var encoded_message = "";
+for (var i = 0; i < plain_text.length; i++) {
+    encoded_message += plain_text[i];
+    if (i % (n - 1) == n - 2) {
+        encoded_message += String.fromCharCode(Math.random(26)+65);
+    }
+}
+radio.sendString(encoded_message);</pre></code>
 						</div>
 					</section>
 
