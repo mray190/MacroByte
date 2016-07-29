@@ -127,9 +127,21 @@ radio.sendString(encoded_text);</code></pre>
 					<section id="image" class="wrapper style4">
 						<div class="inner">
 							<h2 class="major">Vignere Cipher</h2>
+							Receiving:
+							<pre><code>radio.setGroup(42);
+radio.onDataReceived(() => {
+    var encoded_text = radio.receiveString();
+    var plain_text = "";
+    var vignere_key = "Badger";
+    var vignere_index;
+    for (var i = 0; i < plain_text.length; i++) {
+        vignere_index = i % vignere_key.length;
+        plain_text += String.fromCharCode(encoded_text[i].charCodeAt(0) - vignere_key[i].charCodeAt(vignere_index));
+    }
+});</code></pre>
 							Sending:
 							<pre><code>var plain_text = "Taco Vignere";
-var vignere_key = "Badger"
+var vignere_key = "Badger";
 var encoded_text = "";
 var vignere_index;
 for (var i = 0; i < plain_text.length; i++) {
